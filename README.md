@@ -1,36 +1,104 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Project Manager
+Веб-приложение для просмотра и управления списком проектов. Пользователи могут просматривать список проектов, фильтровать и искать их, открывать детальную страницу проекта, а также добавлять новые проекты через форму.
 
-## Getting Started
+## Автор
+Бабаева Дарья Евгеньевна
 
-First, run the development server:
+Email: darya.babaeva05@gmail.com
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+[GitHub](https://github.com/Ayskwl)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Технологии
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- Next.js (App Router)
+- React
+- TypeScript
+- Tailwind CSS
+- Zod
+- React Hook Form
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Функциональность
 
-## Learn More
+- просмотр списка проектов в виде карточек;
+- поиск проектов по названию;
+- фильтрация проектов по статусу;
+- сортировка проектов по дате создания;
+- сохранение применённых фильтров в URL;
+- просмотр детальной страницы проекта;
+- добавление нового проекта через форму;
+- валидация обязательных полей формы с отображением ошибок;
+- блокировка кнопки отправки во время сохранения;
+- страница "Проект не найден" при обращении к несуществующему ID;
+- состояния загрузки и ошибки при получении данных;
+- адаптивная вёрстка для мобильных устройств, планшетов и десктопа.
 
-To learn more about Next.js, take a look at the following resources:
+# Запуск проекта
+## 1. Клонировать репозиторий
+``` git clone https://github.com/Ayskwl/project-manager.git ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+``` cd project-manager ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 2. Установить зависимости
+``` npm install ```
 
-## Deploy on Vercel
+## 3. Запустить проект в режиме разработки
+``` npm run dev ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Теперь проект доступен по адресу [http://localhost:3000](http://localhost:3000)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 4. Проверка кода и сборка проекта
+Для проверки кода линтером : ``` npm run lint ```
+
+Сборка проекта: ``` npm run build ```
+
+## 5. Основные адреса проекта
+
+[Список проектов](http://localhost:3000/projects)
+
+[Добавление проекта](http://localhost:3000/projects/new)
+
+[Пример детальной страницы проекта](http://localhost:3000/projects/1)
+
+[API — список проектов](http://localhost:3000/api/projects)
+
+## Демо
+
+Проект развёрнут на Vercel:
+<https://project-manager-git-main-ayskwls-projects.vercel.app>
+
+## Архитектура
+
+- **App Router** — маршрутизация построена на структуре папок `app/`: публичные страницы (`/projects`, `/projects/[id]`, `/projects/new`) и серверные Route Handlers (`/api/projects`, `/api/projects/[id]`).
+
+- **Server Components** используются там, где не нужна интерактивность на клиенте — например, страница одного проекта рендерится на сервере.
+
+- **Client Components** используются там, где нужна интерактивность — страница списка (фильтры, поиск, сортировка) и форма добавления проекта.
+
+- **Хранилище данных** — данные хранятся в памяти сервера (`lib/data.ts`), доступ к ним идёт через Route Handlers. Персистентное хранилище не использовалось, так как задание явно допускает такой подход.
+
+- **Валидация** — общая Zod-схема (`lib/schemas.ts`) используется и на клиенте через React Hook Form, и на сервере в Route Handler при создании проекта.
+
+- **Фильтры в URL** — поиск, фильтр по статусу и сортировка хранятся в query-параметрах страницы, а не в локальном состоянии, поэтому ссылку с применёнными фильтрами можно скопировать и переслать.
+
+## Реализованные требования
+
+- [x] Список проектов с карточками
+- [x] Фильтрация по статусу
+- [x] Поиск по названию
+- [x] Сортировка по дате создания
+- [x] Сообщение при пустом результате
+- [x] Динамическая страница проекта `/projects/[id]`
+- [x] Форма добавления проекта с валидацией
+- [x] Отображение ошибок рядом с полями
+- [x] Блокировка кнопки во время отправки
+- [x] Состояния загрузки, ошибки, пустого списка, 404, отправки формы
+- [x] Адаптивная вёрстка
+- [x] Типизация проекта, формы, ответов API
+- [x] Базовая обработка ошибок
+
+## Бонусные пункты
+
+- [x] Валидация через Zod
+- [x] Сохранение фильтров в URL
+- [x] Server Components там, где уместно
+- [x] Деплой на Vercel
