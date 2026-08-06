@@ -3,9 +3,10 @@ import { projects } from '@/lib/data';
 
 export async function GET(
     request: NextRequest,
-    { params }: { params: { id: string } }
+    { params }: { params: Promise<{ id: string }> }
 ) {
-    const project = projects.find((p) => p.id === params.id);
+    const { id } = await params;
+    const project = projects.find((p) => p.id === id);
 
     if (!project) {
         return NextResponse.json(
